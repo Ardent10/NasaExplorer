@@ -4,7 +4,7 @@ import { EditUserProfileSchema } from "@/utils/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUserProfile } from "../../hooks";
 import { UploadImageTab } from "../EditProfile/Tabs/upload";
@@ -45,7 +45,7 @@ export function EditProfiletModal(props: props) {
     jobTitle: "",
     startJobDate: "",
     endJobDate: "",
-    university:"",
+    university: "",
     degree: "",
     startDegreeDate: "",
     endDegreeDate: "",
@@ -65,7 +65,7 @@ export function EditProfiletModal(props: props) {
     jobTitle: "",
     startJobDate: "",
     endJobDate: "",
-    university:"",
+    university: "",
     degree: "",
     startDegreeDate: "",
     endDegreeDate: "",
