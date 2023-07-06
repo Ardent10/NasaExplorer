@@ -96,7 +96,7 @@ const HomeScreen = () => {
   return (
     <>
       <Layout>
-        <Box pt={12} className="commonFlexStyle">
+        <Box pt={11} pb={3} className="commonFlexStyle">
           <Typography variant="h2" fontWeight="bold">
             Nasa Image of the Day
           </Typography>
