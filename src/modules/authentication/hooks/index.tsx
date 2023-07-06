@@ -1,28 +1,33 @@
-import { account, database } from "@/config/appwrite";
-import { ID, Query } from "appwrite";
-
-import { useAppState } from "@/store/index";
 import { useRouter } from "next/router";
+import { useAppState } from "@/store";
 
-interface signupProps {
+interface SignupProps {
   email: string;
   password: string;
   username: string;
   location: string;
-  github: string;
+  dob: string;
   firstName: string;
   lastName: string;
 }
-interface loginProps {
+interface LoginProps {
   email: string;
   password: string;
 }
 
 export function useAuth() {
-  const [state, dispatch] = useAppState();
   const router = useRouter();
+  const [state, dispatch] = useAppState();
 
-  const Signup = async ({ email, password, username, location,github,firstName,lastName }: signupProps) => {
+  const Signup = async ({
+    email,
+    password,
+    username,
+    location,
+    dob,
+    firstName,
+    lastName,
+  }: SignupProps) => {
     try {
       dispatch({
         type: "setIsLoading",
@@ -30,23 +35,25 @@ export function useAuth() {
           isLoading: true,
         },
       });
-      const res = await account.create(ID.unique(), email, password, username);
 
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          username,
+          location,
+          dob,
+          firstName,
+          lastName,
+        }),
+      });
 
-      if (res.$id) {
-        await database.createDocument(
-          process.env.NEXT_PUBLIC_APPWRITE_DB_ID ?? "",
-          process.env.NEXT_PUBLIC_USERS_COLLECTION_ID ?? "",
-          res.$id,
-          {
-            email: email,
-            username: username,
-            location: location,
-            github: github,
-            firstName: firstName,
-            lastName: lastName,
-          }
-        );
+      if (res.status === 200) {
+        const data = await res.json();
         dispatch({
           type: "setToggleSnackbar",
           payload: {
@@ -91,7 +98,7 @@ export function useAuth() {
     }
   };
 
-  const Login = async ({ email, password }: loginProps) => {
+  const Login = async ({ email, password }: LoginProps) => {
     try {
       dispatch({
         type: "setIsLoading",
@@ -100,14 +107,25 @@ export function useAuth() {
         },
       });
 
-      const res = await account.createEmailSession(email, password);
-      if (res.ip) {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
         dispatch({
           type: "setToggleSnackbar",
           payload: {
             open: true,
             severity: "success",
-            message: `Welcome to DevVerse`,
+            message: `Welcome to NasaExplorer`,
           },
         });
         dispatch({
@@ -117,6 +135,15 @@ export function useAuth() {
           },
         });
         router.push("/home");
+      } else {
+        dispatch({
+          type: "setToggleSnackbar",
+          payload: {
+            open: true,
+            severity: "error",
+            message: "Login Failed",
+          },
+        });
       }
     } catch (error) {
       dispatch({
@@ -139,22 +166,20 @@ export function useAuth() {
 
   const getAccount = async () => {
     try {
-      const res = await account.get();
-      if (res.name && res.email && res.$id) {
-
-        // Get the logged user entire profile.
-        const usersRes = await database.listDocuments(
-          process.env.NEXT_PUBLIC_APPWRITE_DB_ID ?? "",
-          process.env.NEXT_PUBLIC_USERS_COLLECTION_ID ?? "",
-          [Query.equal("$id", res.$id)]
-        );
-        dispatch({
-          type: "setUserProfile",
-          payload: {
-            ...usersRes.documents[0],
-          },
-        });
-        // router.push("/home");
+      const res = await fetch("/api/auth/getAccount");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.name && data.email && data.$id) {
+          dispatch({
+            type: "setUserProfile",
+            payload: {
+              ...data,
+            },
+          });
+          // router.push("/home");
+        } else {
+          router.push("/");
+        }
       } else {
         router.push("/");
       }
@@ -165,7 +190,9 @@ export function useAuth() {
 
   const Logout = async () => {
     try {
-      await account.deleteSession("current");
+      await fetch("/api/user/logout", {
+        method: "POST",
+      });
       dispatch({
         type: "setToggleSnackbar",
         payload: {

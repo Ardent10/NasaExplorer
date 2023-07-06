@@ -1,7 +1,6 @@
 import { CustomTooltip, SearchBar } from "@common/index";
 import { yupResolver } from "@hookform/resolvers/yup";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, IconButton, Toolbar } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -14,9 +13,7 @@ import { sxStyles } from "./index.styles";
 import ProfileMenu from "./profileMenu";
 
 interface props {
-  open: any;
-  handleOpenDrawer: any;
-  mode:string;
+  mode: string;
 }
 const drawerWidth = 240;
 
@@ -57,35 +54,27 @@ export default function Header(props: props) {
   });
 
   const styles = sxStyles();
-const iconColor = props.mode === "dark" ? "#FFF" : "#000";
+  const iconColor = props.mode === "dark" ? "#FFF" : "#000";
   return (
-    <Box
-      sx={styles.appBarBoxStyle}
-      >
+    <Box sx={styles.appBarBoxStyle}>
       <AppBar
         id="header"
         position="fixed"
-        open={props.open}
-        sx={{...styles.appBarStyle,
-          borderBottom:props.mode === "dark" ? "1px solid #8a89fa" : "#FFFE"
+        sx={{
+          ...styles.appBarStyle,
+          borderBottom: props.mode === "dark" ? "1px solid #8a89fa" : "#FFFE",
         }}
       >
         <Toolbar sx={styles.toolBarStyle}>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={props.handleOpenDrawer}
-              edge="start"
-              sx={{
-                ...(props.open && { display: "none" }),
-              }}
-            >
-              <MenuIcon sx={{ color: "#8a89fa" }} fontSize="large" />
-            </IconButton>
-            <Link href="/" style={{ textDecoration: "none" }}>
+            <Link href="/home" style={{ textDecoration: "none" }}>
               <Box display="flex" justifyContent="start" alignItems="center">
-                <img src="/DevVerse-nobg.png" height={50} alt="DevVerse" />
+                <img
+                  src="/logo.png"
+                  height={50}
+                  alt="NasaExplorer"
+                  style={{ backgroundColor: "#fff", borderRadius: "25px" }}
+                />
               </Box>
             </Link>
           </Box>
@@ -118,10 +107,7 @@ const iconColor = props.mode === "dark" ? "#FFF" : "#000";
             <DarkMode />
 
             <CustomTooltip placement="bottom" label="⭐ Star on Github">
-              <IconButton
-                size="medium"
-                href="https://github.com/Ardent10/DevVerse"
-              >
+              <IconButton size="medium" href="https://github.com/Ardent10/">
                 <GitHubIcon sx={{ color: iconColor }} fontSize="large" />
               </IconButton>
             </CustomTooltip>

@@ -1,7 +1,7 @@
 import { useAppState } from "@/store/index";
 import { PrimaryButton } from "@common/index";
-import Dropzone from "@modules/common/Post/components/dropzone";
-import { sxStyles } from "@modules/common/Post/components/index.styles";
+import Dropzone from "@modules/common/Dropzone/dropzone";
+import { sxStyles } from "@modules/common/Dropzone/index.styles";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import {

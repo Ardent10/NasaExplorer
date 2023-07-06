@@ -32,12 +32,12 @@ export function SignupScreen() {
 
   const defaultValues = {
     username: "John Doe",
-    email: "john@devverse.com",
+    email: "john@nasaexplorer.com",
     password: "Test@123",
     confirm_password: "Test@123",
     location: "India",
     agree_tnc: true,
-    github: "",
+    dob: "",
     firstName: "",
     lastName: "",
   };
@@ -53,7 +53,7 @@ export function SignupScreen() {
       password: data.password,
       username: data.username,
       location: data.location,
-      github: data.github,
+      dob: data.dob,
       firstName: data.firstName,
       lastName: data.lastName,
     });

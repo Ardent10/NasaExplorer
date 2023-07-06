@@ -18,7 +18,7 @@ export const OAuth = ({ label, onClick }: OAuthProps) => {
       borderRadius="8px"
       height={45}
       width={390}
-      showLoaderonBtn={true}
+      // showLoaderonBtn={true}
       buttonChild={
         <img
           src="/google.svg"

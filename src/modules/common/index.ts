@@ -5,7 +5,6 @@ export * from "./Form";
 export * from "./Layout";
 export * from "./Menu";
 export * from "./Modal";
-export * from "./Post";
 export * from "./PrimaryButton";
 export * from "./ProfilePreview";
 export * from "./Search";

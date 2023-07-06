@@ -2,7 +2,6 @@ import { useAuth } from "@/modules/authentication/hooks";
 import { useAppState } from "@/store/index";
 import { CustomTooltip } from "@common/index";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
 import {
   Box,
   Divider,
@@ -58,7 +57,7 @@ export default function AccountMenu() {
           onClick={handleClick}
         >
           <Typography color="#8a89fa" fontWeight={600} p={1}>
-            {userFullName? userFullName:""}
+            {userFullName ? userFullName : ""}
           </Typography>
           <IconButton
             size="small"
@@ -95,16 +94,9 @@ export default function AccountMenu() {
           />
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
+
         <Divider />
-        <MenuItem onClick={() => router.push("/settings")}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+
         <MenuItem onClick={() => handleLogout()}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />

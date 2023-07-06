@@ -15,7 +15,7 @@ export const ColorModeContext = createContext<IColorModeContext>({
 });
 
 export const ColorModeContextProvider = ({ children }: any) => {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<"light" | "dark">("dark");
 
   const colorMode = useMemo(
     () => ({

@@ -26,7 +26,7 @@ export function LoginScreen() {
   const [state, dispatch] = useAppState();
 
   const defaultValues = {
-    email: "john@devverse.com",
+    email: "john@nasaexplorer.com",
     password: "Test@123",
     remember: true,
   };
