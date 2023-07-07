@@ -14,7 +14,6 @@ import {
 import { LoginSchema } from "@utils/validations";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { OAuth } from "../components/OAuth";
 import { SpaceBg } from "../components/SpaceBg";
@@ -36,12 +35,12 @@ export function LoginScreen() {
     defaultValues: defaultValues,
   });
 
-  useEffect(() => {
-    const fetchAccount = async () => {
-      await getAccount();
-    };
-    fetchAccount();
-  }, []);
+  // useEffect(() => {
+  //   const fetchAccount = async () => {
+  //     await getAccount();
+  //   };
+  //   fetchAccount();
+  // }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     await Login({ email: data.email, password: data.password });
@@ -52,7 +51,7 @@ export function LoginScreen() {
       <CustomSnackbar
         open={state.toggleSnackbar.open}
         severity={
-          state.toggleSnackbar.severity == "success" ? "success" : "info"
+          state.toggleSnackbar.severity ? state.toggleSnackbar.severity : "info"
         }
         message={state.toggleSnackbar.message}
         vertical="top"
@@ -87,8 +86,8 @@ export function LoginScreen() {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12}className="commonFlexStyle">
-                <OAuth label="Login With Google" onClick={()=>{}}/>
+              <Grid item xs={12} className="commonFlexStyle">
+                <OAuth label="Login With Google" onClick={() => {}} />
               </Grid>
 
               <Grid item xs={12}>

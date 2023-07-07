@@ -1,4 +1,3 @@
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import {
   Box,
   Button,
@@ -10,7 +9,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { PrimaryButton } from "../PrimaryButton";
 
 interface props {
   height?: number | string;
@@ -23,16 +21,21 @@ interface props {
   position?: "absolute" | "relative" | "fixed";
   cardAction?: boolean;
   cardMedia?: string;
-  cardMediaheight?: number;
+  cardMediaheight?: number | string;
+  cardMediaWidth?: number | string;
   divider?: boolean;
   buttonOnHeader?: boolean;
   btnOnClick?: any;
   btnLabel?: string;
   btnDisabled?: boolean;
-  btnType?:string;
+  btnType?: string;
+  author?: string;
+  date?: string;
+  desc?: string;
 }
 
 export function BasicCard(props: props) {
+  console.log(props.cardMedia);
   return (
     <Grid container id="basic-card">
       <Grid item xs={12} px={props.px} py={props.py}>
@@ -41,42 +44,35 @@ export function BasicCard(props: props) {
             minWidth: props.width ? props.width : "100%",
             height: props.height,
             position: props?.position,
+            padding: 2,
           }}
         >
           {props.cardMedia && (
             <CardMedia
-              sx={{ height: props.cardMediaheight }}
+              component="img"
+              sx={{
+                width: props.cardMediaWidth,
+              }}
               image={props.cardMedia}
               title="icon"
             />
           )}
           <CardContent>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography sx={{ fontSize: 22, fontWeight: 500 }} gutterBottom>
+            <Box gap={1}>
+              <Typography sx={{ fontSize: 18, fontWeight: 500 }} gutterBottom>
                 {props.title}
               </Typography>
-              {props.buttonOnHeader && (
-                <PrimaryButton
-                  title={props?.btnLabel ? props.btnLabel : ""}
-                  type={props.btnType}
-                  borderColor="1px solid #8a89fa"
-                  backgroundColor="#8a89fa"
-                  fontSize={12}
-                  fontWeight={500}
-                  width={110}
-                  height={30}
-                  disableElevation
-                  buttonChild={<LocalOfferIcon fontSize="small" />}
-                  onClick={props.btnOnClick}
-                  disabled={props.btnDisabled}
-                />
+              {props.author && <Typography>By: {props.author}</Typography>}
+              {props.date && (
+                <Typography gutterBottom>Date: {props.date}</Typography>
               )}
             </Box>
             {props.divider && <Divider />}
+            {props.desc && (
+              <Typography variant="body2" color="text.secondary">
+                {props.desc}
+              </Typography>
+            )}
             {props.children}
           </CardContent>
           {props.cardAction && (

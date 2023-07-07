@@ -1,5 +1,6 @@
-import { useRouter } from "next/router";
 import { useAppState } from "@/store";
+import { globalApiCallHelper } from "@/utils/globalApiCallHelper";
+import { useRouter } from "next/router";
 
 interface SignupProps {
   email: string;
@@ -107,19 +108,21 @@ export function useAuth() {
         },
       });
 
-      const res = await fetch("/api/auth/login", {
+      const res = await globalApiCallHelper({
+        api: "/auth/login",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        body: {
           email,
           password,
-        }),
+        },
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      console.log("RES", res);
+
+      if (res._doc) {
         dispatch({
           type: "setToggleSnackbar",
           payload: {
@@ -131,7 +134,7 @@ export function useAuth() {
         dispatch({
           type: "setIsLoading",
           payload: {
-            isLoading: true,
+            isLoading: false,
           },
         });
         router.push("/home");
@@ -145,28 +148,23 @@ export function useAuth() {
           },
         });
       }
-    } catch (error) {
-      dispatch({
-        type: "setToggleSnackbar",
-        payload: {
-          open: true,
-          severity: "error",
-          message: "Login Failed",
-        },
-      });
-    } finally {
-      dispatch({
-        type: "setIsLoading",
-        payload: {
-          isLoading: false,
-        },
-      });
+    } catch (error: any) {
+      console.log("ERROR", error);
+      // dispatch({
+      //   type: "setToggleSnackbar",
+      //   payload: {
+      //     open: true,
+      //     severity: "error",
+      //     message: "Login Failed",
+      //   },
+      // });
+      throw new Error(error);
     }
   };
 
   const getAccount = async () => {
     try {
-      const res = await fetch("/api/auth/getAccount");
+      const res = await globalApiCallHelper({ api: "/auth/getAccount" });
       if (res.ok) {
         const data = await res.json();
         if (data.name && data.email && data.$id) {
@@ -190,7 +188,7 @@ export function useAuth() {
 
   const Logout = async () => {
     try {
-      await fetch("/api/user/logout", {
+      await fetch("/user/logout", {
         method: "POST",
       });
       dispatch({

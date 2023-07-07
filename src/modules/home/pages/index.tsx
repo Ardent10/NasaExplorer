@@ -1,18 +1,14 @@
 import { ColorModeContext } from "@/modules/common/DarkMode";
 import Footer from "@/modules/common/Layout/Footer";
 import { useAppState } from "@/store";
-import { BasicCard, Layout, ProfilePreview, AudioPlayer } from "@common/index";
-import PauseIcon from "@mui/icons-material/Pause";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Box, Button, Grid, Slider, Typography } from "@mui/material";
+import { AudioPlayer, BasicCard, Layout } from "@common/index";
+import { Box, Grid, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 
 const HomeScreen = () => {
   const [state] = useAppState();
   const { mode } = useContext(ColorModeContext);
   const [nasaImageOfTheDay, setNasaImageOfTheDay] = useState<any>(null);
-
-
 
   // fetch nasa image of the day from nasa apod api
   const fetchNasaImage = async () => {
@@ -36,30 +32,29 @@ const HomeScreen = () => {
             Nasa Image of the Day
           </Typography>
         </Box>
-        <Grid
-          container
-          display="flex"
-          justifyContent="center"
-
-        >
+        <Grid container display="flex" justifyContent="center">
           <Grid item xs={2.5}>
-            <AudioPlayer/>
-            <ProfilePreview />
+            <AudioPlayer />
+            {/* <ProfilePreview /> */}
+            <BasicCard
+              title={nasaImageOfTheDay?.title}
+              author={nasaImageOfTheDay?.copyright}
+              date={nasaImageOfTheDay?.date}
+              desc={nasaImageOfTheDay?.explanation}
+              py={2}
+            />
             <Footer />
           </Grid>
 
           <Grid item xs={8}>
-            <BasicCard title="" divider px={2} py={0}>
-              <img
-                src={
-                  nasaImageOfTheDay?.hdurl
-                    ? nasaImageOfTheDay.hdurl
-                    : "/moon.jpg"
-                }
-                alt="nasa-img"
-                width={"100%"}
-              />
-            </BasicCard>
+            <BasicCard
+              title=""
+              cardMedia={
+                nasaImageOfTheDay?.hdurl ? nasaImageOfTheDay.hdurl : "/moon.jpg"
+              }
+              px={2}
+              py={0}
+            />
           </Grid>
         </Grid>
       </Layout>
