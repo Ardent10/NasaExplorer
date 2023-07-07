@@ -114,13 +114,13 @@ export function useAuth() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: {
+        body: JSON.stringify({
           email,
           password,
-        },
+        }),
       });
 
-      console.log("RES", res);
+      console.log("Login res", res);
 
       if (res._doc) {
         localStorage.setItem("auth_token", res.accessToken);
@@ -144,12 +144,6 @@ export function useAuth() {
             $id: res._doc.$id,
           },
         });
-        dispatch({
-          type: "setIsLoading",
-          payload: {
-            isLoading: false,
-          },
-        });
         router.push("/home");
       } else {
         dispatch({
@@ -161,6 +155,12 @@ export function useAuth() {
           },
         });
       }
+      dispatch({
+        type: "setIsLoading",
+        payload: {
+          isLoading: false,
+        },
+      });
     } catch (error: any) {
       dispatch({
         type: "setToggleSnackbar",
@@ -191,7 +191,7 @@ export function useAuth() {
       });
 
       console.log("get account RES", res);
-      if (res._id) {
+      if (res?._id) {
         dispatch({
           type: "setUserProfile",
           payload: {
@@ -204,19 +204,18 @@ export function useAuth() {
             $id: res._id,
           },
         });
-        // router.push("/home");
+        router.push("/home");
       } else {
         router.push("/");
       }
     } catch (error) {
       console.log("Get Account ERROR: ", error);
-      // router.push("/");
     }
   };
 
   const Logout = async () => {
     try {
-      localStorage.removeItem("accessToken");
+      localStorage.removeItem("auth_token");
       dispatch({
         type: "setToggleSnackbar",
         payload: {

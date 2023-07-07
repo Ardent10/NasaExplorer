@@ -18,6 +18,7 @@ import { Controller, useForm } from "react-hook-form";
 import { OAuth } from "../components/OAuth";
 import { SpaceBg } from "../components/SpaceBg";
 import { useAuth } from "../hooks";
+import { useEffect } from "react";
 
 export function LoginScreen() {
   const router = useRouter();
@@ -35,15 +36,15 @@ export function LoginScreen() {
     defaultValues: defaultValues,
   });
 
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     await getAccount();
-  //   };
-  //   fetchAccount();
-  // }, []);
+  useEffect(() => {
+    const fetchAccount = async () => {
+      await getAccount();
+    };
+    fetchAccount();
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
-    await Login({ email: data.email, password: data.password });
+   await Login({email:data.email, password:data.password});
   });
 
   return (
