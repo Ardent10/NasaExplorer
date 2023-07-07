@@ -7,7 +7,10 @@ type GlobalApiCallHelperProps = {
   headers?: Record<string, string>;
 };
 
-const baseURL = "http://localhost:5000/api";
+const baseURL =
+  process.env.NEXT_PUBLIC_API_BASE_URL !== undefined
+    ? process.env.NEXT_PUBLIC_API_BASE_URL !== undefined
+    : "http://localhost:5000/api";
 
 export const globalApiCallHelper = async ({
   api,
@@ -29,6 +32,6 @@ export const globalApiCallHelper = async ({
 
     return data;
   } catch (error) {
-   console.log("ERROR", error);
+    console.log("ERROR", error);
   }
 };
