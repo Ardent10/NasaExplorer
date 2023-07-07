@@ -42,12 +42,18 @@ export function Loader() {
           overflow: "hidden",
         }}
       >
-        <img src="/logo.png" height={50} alt="NasaExplorer" />
+        <img
+          src="/logo.png"
+          height={50}
+          alt="NasaExplorer"
+          style={{ backgroundColor: "#fff", borderRadius: "25px" }}
+        />
         <Box
           width="100%"
           marginTop={1}
           sx={{
-            backgroundColor: "#8a89fa",
+            background:
+              "linear-gradient(90deg, rgb(0, 0, 0) 0%, rgb(53, 51, 205) 100%) 0px 0px",
             borderRadius: "5px",
             overflow: "hidden",
           }}

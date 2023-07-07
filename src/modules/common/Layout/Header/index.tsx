@@ -98,12 +98,6 @@ export default function Header(props: props) {
             alignItems="center"
             width={260}
           >
-            {/* <IconButton>
-              <WbSunnyRoundedIcon sx={{ color: "#8a89fa" }} />
-            </IconButton>
-            <IconButton>
-              <BedtimeIcon sx={{ color: "#8a89fa" }} />
-            </IconButton> */}
             <DarkMode />
 
             <CustomTooltip placement="bottom" label="⭐ Star on Github">

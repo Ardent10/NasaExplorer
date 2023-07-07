@@ -3,7 +3,6 @@ import { ColorModeContextProvider } from "@modules/common/DarkMode";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
 import createEmotionCache from "../src/createEmotionCache";
 import { AppStateProvider, globalReducers, initialState } from "../src/store";
 import "../styles/index.css";
@@ -22,6 +21,7 @@ export default function MyApp(props: MyAppProps) {
       <Head>
         <title>NASA Explorer | Unlock the Wonders of the Universe.</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link rel="shortcut icon" href="/nasa.svg" type="image/x-icon" />
 
       </Head>
       <AppStateProvider reducer={globalReducers} initialState={initialState}>

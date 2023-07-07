@@ -123,7 +123,7 @@ export function useAuth() {
       console.log("RES", res);
 
       if (res._doc) {
-        localStorage.setItem("auth_token", res.accessToken)
+        localStorage.setItem("auth_token", res.accessToken);
         dispatch({
           type: "setToggleSnackbar",
           payload: {
@@ -135,15 +135,15 @@ export function useAuth() {
         dispatch({
           type: "setUserProfile",
           payload: {
-            firstName:res._doc.firstName,
-            lastName:res._doc.lastName,
-            email:res._doc.email,
-            username:res._doc.username,
-            location:res._doc.location,
-            dob:res._doc.dob,
-            $id:res._doc.$id,
+            firstName: res._doc.firstName,
+            lastName: res._doc.lastName,
+            email: res._doc.email,
+            username: res._doc.username,
+            location: res._doc.location,
+            dob: res._doc.dob,
+            $id: res._doc.$id,
           },
-        })
+        });
         dispatch({
           type: "setIsLoading",
           payload: {
@@ -162,48 +162,61 @@ export function useAuth() {
         });
       }
     } catch (error: any) {
-      console.log("ERROR", error);
-      // dispatch({
-      //   type: "setToggleSnackbar",
-      //   payload: {
-      //     open: true,
-      //     severity: "error",
-      //     message: "Login Failed",
-      //   },
-      // });
-      throw new Error(error);
+      dispatch({
+        type: "setToggleSnackbar",
+        payload: {
+          open: true,
+          severity: "error",
+          message: "Login Failed",
+        },
+      });
     }
   };
 
   const getAccount = async () => {
     try {
-      const res = await globalApiCallHelper({ api: "/auth/getAccount" });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.name && data.email && data.$id) {
-          dispatch({
-            type: "setUserProfile",
-            payload: {
-              ...data,
-            },
-          });
-          // router.push("/home");
-        } else {
-          router.push("/");
-        }
+      const authToken = localStorage.getItem("auth_token");
+
+      if (!authToken) {
+        console.log("Access token not found.");
+      }
+
+      const res = await globalApiCallHelper({
+        api: "/auth/getAccount",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("get account RES", res);
+      if (res._id) {
+        dispatch({
+          type: "setUserProfile",
+          payload: {
+            firstName: res.firstName,
+            lastName: res.lastName,
+            email: res.email,
+            username: res.username,
+            location: res.location,
+            dob: res.dob,
+            $id: res._id,
+          },
+        });
+        // router.push("/home");
       } else {
         router.push("/");
       }
     } catch (error) {
-      router.push("/");
+      console.log("Get Account ERROR: ", error);
+      // router.push("/");
     }
   };
 
   const Logout = async () => {
     try {
-      await fetch("/user/logout", {
-        method: "POST",
-      });
+      localStorage.removeItem("accessToken");
       dispatch({
         type: "setToggleSnackbar",
         payload: {

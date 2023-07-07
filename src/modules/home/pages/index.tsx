@@ -1,24 +1,36 @@
+import { useAuth } from "@/modules/authentication/hooks";
 import { ColorModeContext } from "@/modules/common/DarkMode";
 import Footer from "@/modules/common/Layout/Footer";
 import { useAppState } from "@/store";
 import { AudioPlayer, BasicCard, Layout, Loader } from "@common/index";
 import { Box, Grid, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNasa } from "../hooks";
 
 const HomeScreen = () => {
   const [state] = useAppState();
   const { mode } = useContext(ColorModeContext);
+  const { getAccount } = useAuth();
   const [nasaImageOfTheDay, setNasaImageOfTheDay] = useState<any>(null);
   const { fetchNasaImage } = useNasa();
 
   useEffect(() => {
-    const NasaImageOfTheDayApi = async () => {
+    fetchNasaImageMemoized();
+  }, []);
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      await getAccount();
+    };
+    fetchAccount();
+  }, []);
+
+  const fetchNasaImageMemoized = useMemo(() => {
+    return async () => {
       const res = await fetchNasaImage();
       setNasaImageOfTheDay(res);
     };
-    NasaImageOfTheDayApi();
-  }, []);
+  }, []); // Empty dependency array ensures that the function is memoized and won't change on re-renders
 
   return (
     <>

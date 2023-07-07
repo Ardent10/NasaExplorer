@@ -5,7 +5,6 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Divider,
   Grid,
   Typography,
 } from "@mui/material";
@@ -35,7 +34,6 @@ interface props {
 }
 
 export function BasicCard(props: props) {
-
   return (
     <Grid container id="basic-card">
       <Grid item xs={12} px={props.px} py={props.py}>
@@ -54,26 +52,28 @@ export function BasicCard(props: props) {
                 width: props.cardMediaWidth,
               }}
               image={props.cardMedia}
-              title="icon"
+              title="Nasa Image of the Day"
             />
           )}
-          <CardContent>
-            <Box gap={1}>
-              <Typography sx={{ fontSize: 18, fontWeight: 500 }} gutterBottom>
-                {props.title}
-              </Typography>
-              {props.author && <Typography>By: {props.author}</Typography>}
-              {props.date && (
-                <Typography gutterBottom>Date: {props.date}</Typography>
+          {(props.title || props.author || props.date || props.desc) && (
+            <CardContent>
+              <Box gap={1}>
+                <Typography sx={{ fontSize: 18, fontWeight: 500 }} gutterBottom>
+                  {props.title}
+                </Typography>
+                {props.author && <Typography>By: {props.author}</Typography>}
+                {props.date && (
+                  <Typography gutterBottom>Date: {props.date}</Typography>
+                )}
+              </Box>
+              {props.desc && (
+                <Typography variant="body2" color="text.secondary">
+                  {props.desc}
+                </Typography>
               )}
-            </Box>
-            {props.desc && (
-              <Typography variant="body2" color="text.secondary">
-                {props.desc}
-              </Typography>
-            )}
-            {props.children}
-          </CardContent>
+              {props.children}
+            </CardContent>
+          )}
           {props.cardAction && (
             <CardActions>
               <Button size="small">Learn More</Button>
