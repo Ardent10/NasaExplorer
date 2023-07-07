@@ -56,7 +56,7 @@ export const AudioPlayer: React.FC = () => {
         <Slider
           value={currentTime}
           max={duration}
-          // onChange={handleSeek}
+          onChange={()=>handleSeek}
           aria-label="Audio Slider"
         />
         <Box display="flex" justifyContent="space-between" width={300}>
