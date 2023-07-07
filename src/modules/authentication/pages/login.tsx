@@ -69,8 +69,8 @@ export function LoginScreen() {
           sm={8}
           md={5}
         >
-          <Grid item container p={8} justifyContent="center" rowSpacing={2}>
-            <Grid item container xs={10} rowSpacing={2}>
+          <Grid item container py={8} px={15} justifyContent="center" rowSpacing={2}>
+            <Grid item container xs={12} rowSpacing={2}>
               <Grid item xs={12}>
                 <Typography
                   component="h1"
@@ -86,7 +86,7 @@ export function LoginScreen() {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} className="commonFlexStyle">
+              <Grid item xs={12} width="100%">
                 <OAuth label="Login With Google" onClick={() => {}} />
               </Grid>
 
@@ -106,7 +106,7 @@ export function LoginScreen() {
               </Grid>
             </Grid>
 
-            <Grid item xs={9} rowSpacing={2}>
+            <Grid item xs={12} rowSpacing={2}>
               <form onSubmit={onSubmit}>
                 <Grid container rowSpacing={2}>
                   <Grid item xs={12}>
@@ -183,8 +183,8 @@ export function LoginScreen() {
                   <Grid
                     item
                     xs={12}
-                    sm={8}
-                    md={5}
+
+                    width="100%"
                     justifyContent="center"
                     mt={1}
                   >
@@ -196,7 +196,7 @@ export function LoginScreen() {
                       borderColor="1px solid #0f0da1"
                       borderRadius="28px"
                       height={45}
-                      width={390}
+                      width={"100%"}
                       showLoaderonBtn={true}
                     />
                   </Grid>

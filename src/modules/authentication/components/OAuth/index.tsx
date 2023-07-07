@@ -17,7 +17,7 @@ export const OAuth = ({ label, onClick }: OAuthProps) => {
       borderColor="1px solid #000"
       borderRadius="8px"
       height={45}
-      width={390}
+      width="100%"
       // showLoaderonBtn={true}
       buttonChild={
         <img

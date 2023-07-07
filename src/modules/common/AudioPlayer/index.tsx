@@ -1,8 +1,9 @@
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Box, Button, Slider, Typography } from "@mui/material";
+import { Box, Slider } from "@mui/material";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
+import { PrimaryButton } from "../PrimaryButton";
 
 export const AudioPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,38 +32,38 @@ export const AudioPlayer: React.FC = () => {
     setDuration(state.loadedSeconds);
   };
 
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60)
-      .toString()
-      .padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  };
-
   return (
-    <div>
-      <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
+    <>
+      <Box
+        // sx={{ background: "linear-gradient(to right, #000000, #0f0da1)" }}
+        bgcolor="#272732"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        p={2}
+        borderRadius={2}
+      >
         {isPlaying ? (
-          <Button onClick={handlePause} disabled={!isPlaying}>
-            <PauseIcon />
-            <Typography>Pause Interstellar</Typography>
-          </Button>
+          <PrimaryButton
+            onClick={handlePause}
+            // disabled={!isPlaying}
+            title="Pause Interstellar"
+            buttonChild={<PauseIcon />}
+          />
         ) : (
-          <Button onClick={handlePlay} disabled={isPlaying}>
-            <PlayArrowIcon />
-            <Typography>Play Interstellar</Typography>
-          </Button>
+          <PrimaryButton
+            onClick={handlePlay}
+            // disabled={isPlaying}
+            title="Play Interstellar"
+            buttonChild={<PlayArrowIcon />}
+          />
         )}
         <Slider
           value={currentTime}
           max={duration}
-          onChange={()=>handleSeek}
+          onChange={() => handleSeek}
           aria-label="Audio Slider"
         />
-        <Box display="flex" justifyContent="space-between" width={300}>
-          <Typography>{formatTime(currentTime)}</Typography>
-          <Typography>-{formatTime(duration - currentTime)}</Typography>
-        </Box>
       </Box>
       <ReactPlayer
         url="/interstellar.mp3"
@@ -70,6 +71,6 @@ export const AudioPlayer: React.FC = () => {
         onProgress={handleProgress}
         style={{ display: "none" }}
       />
-    </div>
+    </>
   );
 };

@@ -123,6 +123,7 @@ export function useAuth() {
       console.log("RES", res);
 
       if (res._doc) {
+        localStorage.setItem("auth_token", res.accessToken)
         dispatch({
           type: "setToggleSnackbar",
           payload: {
@@ -131,6 +132,18 @@ export function useAuth() {
             message: `Welcome to NasaExplorer`,
           },
         });
+        dispatch({
+          type: "setUserProfile",
+          payload: {
+            firstName:res._doc.firstName,
+            lastName:res._doc.lastName,
+            email:res._doc.email,
+            username:res._doc.username,
+            location:res._doc.location,
+            dob:res._doc.dob,
+            $id:res._doc.$id,
+          },
+        })
         dispatch({
           type: "setIsLoading",
           payload: {

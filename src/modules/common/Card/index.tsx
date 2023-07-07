@@ -35,7 +35,7 @@ interface props {
 }
 
 export function BasicCard(props: props) {
-  console.log(props.cardMedia);
+
   return (
     <Grid container id="basic-card">
       <Grid item xs={12} px={props.px} py={props.py}>
@@ -67,7 +67,6 @@ export function BasicCard(props: props) {
                 <Typography gutterBottom>Date: {props.date}</Typography>
               )}
             </Box>
-            {props.divider && <Divider />}
             {props.desc && (
               <Typography variant="body2" color="text.secondary">
                 {props.desc}
